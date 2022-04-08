@@ -7,6 +7,8 @@
 
 {% block custom_head %}
     <link href="{{ url_for('static', filename='css/steper.css') }}" rel="stylesheet" type="text/css">
+    <!-- Select2 bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block topbar_actions %}
@@ -21,7 +23,7 @@
             <div class="row">
                 <div class="col-lg-12 ml-auto mr-auto mb-4">
                     <div class="multisteps-form__progress">
-                        <button class="multisteps-form__progress-btn js-active" type="button" title="Distritos" style="font-size:12px" disabled>Distritos y Juzgados</button>
+                        <button class="multisteps-form__progress-btn js-active" type="button" title="distrito" style="font-size:12px" disabled>distrito y oficinas</button>
                         <button class="multisteps-form__progress-btn" type="button" title="Tipo de Tramite" style="font-size:12px" disabled>Tipo de tramite </button>
                         <button class="multisteps-form__progress-btn" type="button" title="Fecha y Hora" style="font-size:12px" disabled>Fecha y Hora</button>
                         <button class="multisteps-form__progress-btn" type="button" title="Detalle cita" style="font-size:12px" disabled>Detalle de la cita</button>
@@ -34,34 +36,32 @@
             <div class="row">
                 <div class="col-lg-12 m-auto">
                     {% call f.form_tag('cit_citas.new', fid='cit_cita_form', css_class='multisteps-form__form') %}
-                        <!-- Distritos y Juzgados -->
-                        {% call step.step_first('Distritos y Juzgados', next_onclick='javascript:guardar_distritos()') %}
-                            {% call f.form_group(form.distritos) %}{% endcall %}
-                            {% call f.form_group(form.juzgados) %}{% endcall %}
+                        <!-- Distrito y oficinas -->
+                        {% call step.step_first('distrito y oficinas', next_onclick='javascript:guardar_distrito()') %}
+                            {% call f.form_group(form.distrito) %}{% endcall %}
+                            {% call f.form_group(form.oficina) %}{% endcall %}
                         {% endcall %}
                         <!-- Step tipo tramite -->
-                        {% call step.step('Tipo de tramite', back_onclick='javascript:guardar_tramite()', next_onclick='javascript:guardar_tramite()', save_onclick='guardar_tramite()') %}
+                        {% call step.step('Tipo de tramite', back_onclick='javascript:guardar_tramite()', next_onclick='javascript:guardar_tramite()') %}
                             {% call f.form_group(form.tipo_tramite) %}{% endcall %}
                             {% call f.form_group(form.indicaciones_tramite) %}{% endcall %}
                         {% endcall %}
                         <!-- Step Fecha y Hora  -->
-                        {% call step.step('Fecha y Hora', back_onclick='javascript:guardar_fecha()', next_onclick='javascript:guardar_fecha()', save_onclick='javascript:guardar_fecha()') %}
+                        {% call step.step('Fecha y Hora', back_onclick='javascript:guardar_fecha()', next_onclick='javascript:guardar_fecha()') %}
                             <h4>Aquí se pondra el calendario para poder agendar la cita junto con sus horarios disponibles</h4>
                         {% endcall %}
                         <!-- Step Detalle cita -->
-                        {% call step.step('Detalle de la cita', back_onclick='javascript:guardar_detalle_cita()', next_onclick='javascript:guardar_detalle_cita()', save_onclick='javascript:guardar_detalle_cita()') %}
+                        {% call step.step('Detalle de la cita', back_onclick='javascript:guardar_detalle_cita()', next_onclick='javascript:guardar_detalle_cita()') %}
                             <label><strong>Distrito judicial</strong></label>
-                            <input type="text" id="distrito_r" class="form-control" value="" readonly/>
+                            {{distrito}}
+                            {{oficina}}
+                            <input type="text" id="distrito_r" class="form-control"/>
                             <label><strong>Juzgado o Unidad Administrativa</strong></label>
-                            <input type="text" id="juzgado_r" class="form-control" value="" readonly/>
+                            <input type="text" id="juzgado_r" class="form-control"/>
                             <label><strong>Tipo de tramite</strong></label>
-                            <input type="text" id="tipo_tramite_r" class="form-control" value="" readonly/>
+                            <input type="text" id="tipo_tramite_r" class="form-control"/>
                             <label><strong>Indicaciones del tramite</strong></label>
-                            <input type="text" id="indicaciones_tramite_r" class="form-control" value="" readonly/>
-                            {# <label><strong>Fecha</strong></label> #}
-                            {# <input type="text" id="fecha_r" class="form-control" value="" readonly/>
-                            <label><strong>Hora</strong></label>
-                            <input type="text" id="hora_r" class="form-control" value="" readonly/> #}
+                            <input type="text" id="indicaciones_tramite_r" class="form-control"/>
                         {% endcall %}
                         <!-- Step Confirmar cita -->
                         {% call step.step_last('Confirmar cita', back_onclick='javascript:guardar_confirmar()') %}
@@ -79,4 +79,14 @@
 
 {% block custom_javascript %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/cit_citas.js') }}"></script>
+    <!-- Select2 bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $('#distrito').addClass('js-example-placeholder-single js-states form-control');
+        $('#oficina').addClass('js-example-placeholder-single js-states form-control');
+        $(".js-example-placeholder-single").select2({
+                placeholder: "Selecciona campo",
+                allowClear: true
+            });
+    </script>
 {% endblock %}

@@ -8,14 +8,6 @@
     {{ topbar.page('Inicio') }}
 {% endblock %}
 
-{% block custom_head %}
-    <style>
-        .btn-cita{
-            margin-right:70px;
-        }
-    </style>
-{% endblock %}
-
 {% block content %}
     {% call start.card() %}
         <h1 class="text-center">Citas v2 cliente</h1>
@@ -27,7 +19,7 @@
         <div class="mb-5 d-grid gap-2 d-md-flex justify-content-md-end"><a href="{{ url_for('cit_citas.new') }}" class="btn btn-success e-md-2 btn-cita">Agendar cita</a></div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
-                <div class="card col" style="width: 18rem; padding:10px;">
+                <div class="card col" style="width: 22rem; padding:10px;">
                     <span><p>25-abril-2022</p></span>
                     <span><p class="mr-2" style="display:flex; float:right;">09:00</p></span>
                     <div class="card-body">
@@ -38,7 +30,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card col" style="width: 18rem; padding:10px;">
+                <div class="card col" style="width: 22rem; padding:10px;">
                     <span><p>26-abril-2022</p></span>
                     <span><p class="mr-2" style="display:flex; float:right;">10:00</p></span>
                     <div class="card-body">
@@ -49,7 +41,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card col" style="width: 18rem; padding:10px;">
+                <div class="card col" style="width: 22rem; padding:10px;">
                     <span><p>04-mayo-2022</p></span>
                     <span><p class="mr-2" style="display:flex; float:right;">11:00</p></span>
                     <div class="card-body">
